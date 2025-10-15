@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1><i class="fas fa-user-circle"></i> Member Dashboard</h1>
+            <a href="#" class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </header>
+        
+        <div class="welcome-message">
+            <h2>Welcome, <span id="welcome-name">Member</span>!</h2>
+            <p>Thank you for being a valued member. Here you can view and manage your membership details.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="user-info">
+                <h2><i class="fas fa-info-circle"></i> Your Information</h2>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-user"></i> Name:</span>
+                    <span class="info-value" id="user-name">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-envelope"></i> Email:</span>
+                    <span class="info-value" id="user-email">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-phone"></i> Phone:</span>
+                    <span class="info-value" id="user-phone">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-calendar"></i> Date of Birth:</span>
+                    <span class="info-value" id="user-dob">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-clock"></i> Joined:</span>
+                    <span class="info-value" id="user-joined">Loading...</span>
+                </div>
+            </div>
+            
+            <div class="membership-card">
+                <div>
+                    <h2>Membership Status</h2>
+                    <div class="membership-type" id="user-membership">Basic</div>
+                    <div class="membership-since">Member since <span id="member-since">Jan 2023</span></div>
+                </div>
+                
+                <div class="membership-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i> <span>Access to basic features</span>
+                    </div>
+                    <div class="benefit-item" id="premium-benefit" style="display: none;">
+                        <i class="fas fa-check-circle"></i> <span>Premium support</span>
+                    </div>
+                    <div class="benefit-item" id="vip-benefit" style="display: none;">
+                        <i class="fas fa-check-circle"></i> <span>VIP exclusive content</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check both session and local storage for user data
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || 
+                               JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                // Redirect to login page if not logged in
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Display user information
+            document.getElementById('welcome-name').textContent = currentUser.fullname.split(' ')[0];
+            document.getElementById('user-name').textContent = currentUser.fullname;
+            document.getElementById('user-email').textContent = currentUser.email;
+            document.getElementById('user-phone').textContent = currentUser.phone;
+            document.getElementById('user-dob').textContent = formatDate(currentUser.dob);
+            
+            // Set membership type with proper capitalization
+            const membershipType = currentUser.membershipType.charAt(0).toUpperCase() + 
+                                  currentUser.membershipType.slice(1);
+            document.getElementById('user-membership').textContent = membershipType;
+            
+            // Show appropriate benefits based on membership type
+            if (currentUser.membershipType === 'premium' || currentUser.membershipType === 'vip') {
+                document.getElementById('premium-benefit').style.display = 'flex';
+            }
+            
+            if (currentUser.membershipType === 'vip') {
+                document.getElementById('vip-benefit').style.display = 'flex';
+            }
+            
+            // Set join date
+            const joinDate = currentUser.joinDate ? new Date(currentUser.joinDate) : new Date();
+            document.getElementById('user-joined').textContent = formatDate(joinDate);
+            document.getElementById('member-since').textContent = formatMonthYear(joinDate);
+            
+            // Handle logout
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Clear both storages
+                sessionStorage.removeItem('currentUser');
+                sessionStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('authToken');
+                
+                window.location.href = 'index.html';
+            });
+        });
+        
+        // Format date for better display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        
+        // Format month and year only
+        function formatMonthYear(date) {
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short'
+            });
+        }
+    </script>
+</body>
+</html>

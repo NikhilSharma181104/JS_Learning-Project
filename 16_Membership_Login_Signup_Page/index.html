@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Signup</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Membership Signup</h1>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullname"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob"><i class="fas fa-calendar"></i> Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <div class="password-strength" id="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password"><i class="fas fa-lock"></i> Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                </div>
+                <div class="form-group">
+                    <label for="membership-type"><i class="fas fa-tag"></i> Membership Type</label>
+                    <select id="membership-type" name="membership-type" required>
+                        <option value="">Select Membership Type</option>
+                        <option value="basic">Basic</option>
+                        <option value="premium">Premium</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
+                </div>
+                <p class="login-link">Already have an account? <a href="#" id="loginLink">Login</a></p>
+            </form>
+
+            <!-- Login Form (Hidden by default) -->
+            <form id="loginForm" style="display: none;">
+                <div class="form-group">
+                    <label for="login-email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="login-email" name="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="login-password" name="login-password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="remember-me" name="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+                </div>
+                <p class="signup-link">Don't have an account? <a href="#" id="signupLink">Sign Up</a></p>
+            </form>
+
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <!-- Loading animation container -->
+    <div class="loader-container" id="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
